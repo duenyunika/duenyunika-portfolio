@@ -148,20 +148,6 @@
 
   footer{padding:34px 0; text-align:center; color:var(--muted); font-size:13px; position:relative; z-index:1;}
 
-  /* Tombol musik */
-  #musicBtn{
-    position:fixed; bottom:22px; right:22px; z-index:100;
-    width:54px; height:54px; border-radius:50%;
-    background:linear-gradient(135deg, var(--accent-3), var(--accent));
-    border:none; color:#fff; font-size:22px;
-    box-shadow:0 10px 26px rgba(232,79,138,0.4);
-    cursor:pointer; display:flex; align-items:center; justify-content:center;
-    transition:transform .2s;
-  }
-  #musicBtn:hover{transform:scale(1.08);}
-  #musicBtn.playing{animation:spin 4s linear infinite;}
-  @keyframes spin{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
-
   .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
   .reveal.in{opacity:1; transform:none;}
 
@@ -319,7 +305,6 @@
 <footer>© 2026 Duen Yunika</footer>
 
 <audio id="bgMusic" src="music.mp3" loop></audio>
-<button id="musicBtn" aria-label="Putar musik">🎵</button>
 
 <script>
   const observer = new IntersectionObserver((entries) => {
@@ -342,15 +327,12 @@
 
   // Musik latar
   const music = document.getElementById('bgMusic');
-  const musicBtn = document.getElementById('musicBtn');
   let isPlaying = false;
 
   function startMusic(){
     if (isPlaying) return;
     music.muted = false;
     music.play().then(() => {
-      musicBtn.textContent = '⏸';
-      musicBtn.classList.add('playing');
       isPlaying = true;
     }).catch(()=>{});
   }
@@ -360,17 +342,6 @@
     document.addEventListener(evt, startMusic, { once:true, passive:true });
   });
   window.addEventListener('scroll', startMusic, { once:true, passive:true });
-
-  musicBtn.addEventListener('click', () => {
-    if (!isPlaying) {
-      startMusic();
-    } else {
-      music.pause();
-      musicBtn.textContent = '🎵';
-      musicBtn.classList.remove('playing');
-      isPlaying = false;
-    }
-  });
 </script>
 </body>
 </html>
