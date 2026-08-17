@@ -318,7 +318,7 @@
 
 <footer>© 2026 Duen Yunika</footer>
 
-<audio id="bgMusic" src="music.mp3" loop></audio>
+<audio id="bgMusic" src="musik.mp3" loop></audio>
 <button id="musicBtn" aria-label="Putar musik">🎵</button>
 
 <script>
@@ -355,10 +355,11 @@
     }).catch(()=>{});
   }
 
-  // Nyala otomatis begitu ada interaksi pertama (klik, sentuh, atau scroll)
-  ['click', 'touchstart', 'scroll', 'keydown'].forEach(evt => {
-    window.addEventListener(evt, startMusic, { once:true, passive:true });
+  // Nyala otomatis begitu ada sentuhan/ketukan/geser pertama di layar
+  ['pointerdown', 'touchstart', 'click', 'keydown'].forEach(evt => {
+    document.addEventListener(evt, startMusic, { once:true, passive:true });
   });
+  window.addEventListener('scroll', startMusic, { once:true, passive:true });
 
   musicBtn.addEventListener('click', () => {
     if (!isPlaying) {
